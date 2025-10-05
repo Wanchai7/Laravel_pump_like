@@ -30,14 +30,25 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        if (! Gate::allows('create-product')) {
+            abort(403);
+        }
+
         $request->validate([
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image',
         ]);
 
-        $product = new Product($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('products', 'public');
+            $data['image_path'] = $path;
+        }
+
+        $product = new Product($data);
         $product->user_id = auth()->id();
         $product->save();
 
@@ -76,10 +87,17 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image',
         ]);
 
-        $product->update($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('products', 'public');
+            $data['image_path'] = $path;
+        }
+
+        $product->update($data);
 
         return redirect()->route('welcome')->with('success', 'Product updated successfully.');
     }

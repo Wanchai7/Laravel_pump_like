@@ -10,9 +10,14 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'image',
+        'image_path',
         'user_id'
     ];
+
+    public function getImageUrlAttribute()
+    {
+        return asset('storage/' . $this->image_path);
+    }
 
     public function user()
     {
