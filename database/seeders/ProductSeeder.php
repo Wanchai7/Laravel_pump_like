@@ -20,7 +20,7 @@ class ProductSeeder extends Seeder
             'name' => 'Laptop',
             'description' => 'A powerful laptop for all your needs.',
             'price' => 1200.50,
-            'image' => 'https://via.placeholder.com/150',
+            'image_path' => 'https://via.placeholder.com/150',
             'user_id' => $user->id
         ]);
 
@@ -28,7 +28,7 @@ class ProductSeeder extends Seeder
             'name' => 'Smartphone',
             'description' => 'A smartphone with a great camera.',
             'price' => 800.00,
-            'image' => 'https://via.placeholder.com/150',
+            'image_path' => 'https://via.placeholder.com/150',
             'user_id' => $user->id
         ]);
 
@@ -36,7 +36,7 @@ class ProductSeeder extends Seeder
             'name' => 'Headphones',
             'description' => 'Noise-cancelling headphones.',
             'price' => 150.75,
-            'image' => 'https://via.placeholder.com/150',
+            'image_path' => 'https://via.placeholder.com/150',
             'user_id' => $user->id
         ]);
 
@@ -44,7 +44,7 @@ class ProductSeeder extends Seeder
             'name' => 'Keyboard',
             'description' => 'A mechanical keyboard.',
             'price' => 100.00,
-            'image' => 'https://via.placeholder.com/150',
+            'image_path' => 'https://via.placeholder.com/150',
             'user_id' => $user->id
         ]);
 
@@ -52,7 +52,7 @@ class ProductSeeder extends Seeder
             'name' => 'Mouse',
             'description' => 'A wireless mouse.',
             'price' => 50.00,
-            'image' => 'https://via.placeholder.com/150',
+            'image_path' => 'https://via.placeholder.com/150',
             'user_id' => $user->id
         ]);
     }
