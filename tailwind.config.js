@@ -12,7 +12,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Inter', ...defaultTheme.fontFamily.sans],
+                sans: ['Poppins', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 primary: {
@@ -28,6 +28,21 @@ export default {
                     '900': '#4c1d95',
                     '950': '#2e1065',
                 },
+                secondary: {
+                    '50': '#f0f9ff',
+                    '100': '#e0f2fe',
+                    '200': '#bae6fd',
+                    '300': '#7dd3fc',
+                    '400': '#38bdf8',
+                    '500': '#0ea5e9',
+                    '600': '#0284c7',
+                    '700': '#0369a1',
+                    '800': '#075985',
+                    '900': '#0c4a6e',
+                    '950': '#082f49',
+                },
+                background: '#111827',
+                textColor: '#e5e7eb',
             },
         },
     },

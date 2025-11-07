@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'omise' => [
+        'key' => env('OMISE_PUBLIC_KEY'),
+        'secret' => env('OMISE_SECRET_KEY'),
+    ],
+
 ];

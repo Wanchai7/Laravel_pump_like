@@ -48,11 +48,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('update-product', function (User $user, Product $product) {
-            if ($user->hasRole('owner')) {
-                return true;
-            }
-
-            if ($user->hasRole('admin') && ! $product->user->hasRole('owner')) {
+            if ($user->hasRole('owner') || $user->hasRole('admin')) {
                 return true;
             }
 
@@ -60,11 +56,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('delete-product', function (User $user, Product $product) {
-            if ($user->hasRole('owner')) {
-                return true;
-            }
-
-            if ($user->hasRole('admin') && ! $product->user->hasRole('owner')) {
+            if ($user->hasRole('owner') || $user->hasRole('admin')) {
                 return true;
             }
 
