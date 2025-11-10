@@ -36,6 +36,7 @@
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">จำนวน</th>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ราคา</th>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ราคารวม</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ลิงก์</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-secondary-900 divide-y divide-secondary-700">
@@ -45,6 +46,13 @@
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ $item->quantity }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ number_format($item->price, 2) }} บาท</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ number_format($item->price * $item->quantity, 2) }} บาท</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    @if($item->link)
+                                                        <a href="{{ $item->link }}" target="_blank" class="text-primary-400 hover:text-primary-500">ดูลิงก์</a>
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -39,6 +39,7 @@ class OrderController extends Controller
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
                 'price' => $item->product->price,
+                'link' => $item->link,
             ]);
         }
 

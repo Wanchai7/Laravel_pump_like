@@ -24,10 +24,12 @@ class CartController extends Controller
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
+            'index' => 'required|string',
         ]);
 
         $cartItem = Cart::where('user_id', Auth::id())
                         ->where('product_id', $request->input('product_id'))
+                        ->where('link', $request->input('index'))
                         ->first();
 
         if ($cartItem) {
@@ -37,6 +39,7 @@ class CartController extends Controller
                 'user_id' => Auth::id(),
                 'product_id' => $request->input('product_id'),
                 'quantity' => 1,
+                'link' => $request->input('index'),
             ]);
         }
 

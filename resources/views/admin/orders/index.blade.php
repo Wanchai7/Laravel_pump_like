@@ -65,6 +65,7 @@
                                             <thead class="bg-secondary-700">
                                                 <tr>
                                                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">สินค้า</th>
+                                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ลิงก์</th>
                                                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">จำนวน</th>
                                                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ราคาต่อหน่วย</th>
                                                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ราคารวม</th>
@@ -74,6 +75,20 @@
                                                 @foreach ($order->items as $item)
                                                     <tr>
                                                         <td class="px-4 py-2 whitespace-nowrap text-white">{{ $item->product->name }}</td>
+                                                        <td class="px-4 py-2 whitespace-nowrap text-white">
+                                                            @if($item->link)
+                                                                <div class="flex items-center space-x-2">
+                                                                    <a href="{{ $item->link }}" target="_blank" class="text-primary-400 hover:text-primary-600">
+                                                                        {{ $item->link }}
+                                                                    </a>
+                                                                    <button type="button" onclick="copyToClipboard('{{ $item->link }}')" class="text-gray-400 hover:text-gray-200 focus:outline-none">
+                                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1.5M9 3h6l-3 3L9 3zM15 7v3m0 0v3m0-3h3m-3 0H9m12-2a2 2 0 00-2-2H9a2 2 0 00-2 2v10a2 2 0 002 2h6a2 2 0 002-2V9a2 2 0 00-2-2z"></path></svg>
+                                                                    </button>
+                                                                </div>
+                                                            @else
+                                                                -
+                                                            @endif
+                                                        </td>
                                                         <td class="px-4 py-2 whitespace-nowrap text-white">{{ $item->quantity }}</td>
                                                         <td class="px-4 py-2 whitespace-nowrap text-white">{{ number_format($item->price, 2) }} บาท</td>
                                                         <td class="px-4 py-2 whitespace-nowrap text-white">{{ number_format($item->price * $item->quantity, 2) }} บาท</td>
@@ -90,4 +105,13 @@
             </div>
         </div>
     </div>
+<script>
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function() {
+            alert('คัดลอกลิงก์แล้ว: ' + text);
+        }, function(err) {
+            console.error('ไม่สามารถคัดลอกลิงก์ได้: ', err);
+        });
+    }
+</script>
 </x-app-layout>

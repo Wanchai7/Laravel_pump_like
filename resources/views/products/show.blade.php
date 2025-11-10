@@ -13,7 +13,7 @@
                     <div class="p-4">
                         <p class="text-gray-200">{{ $product->description }}</p>
                         <p class="text-primary-500 font-semibold mt-2">{{ $product->price }} บาท</p>
-                        <form action="{{ route('cart.store') }}" method="POST" class="mt-4">
+                        <form id="add-to-cart-form" action="{{ route('cart.store') }}" method="POST" class="mt-4 add-to-cart-form">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                             <button type="submit" class="w-full bg-primary-500 text-white py-2 px-4 rounded-md hover:bg-primary-600">เพิ่มลงตะกร้า</button>
@@ -40,7 +40,7 @@
     <script>
         function deleteProduct(id) {
             Swal.fire({
-                title: 'คุณแน่ใจหรือไม่?',
+                title: 'คุณแน่-ใจหรือไม่?',
                 text: "การกระทำนี้ไม่สามารถย้อนกลับได้!",
                 icon: 'warning',
                 showCancelButton: true,

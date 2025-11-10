@@ -130,47 +130,77 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.matches('.add-to-cart-form')) {
             e.preventDefault();
             const form = e.target;
-            const formData = new FormData(form);
+            const productId = form.querySelector('input[name="product_id"]').value;
 
-            fetch(form.action, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Accept': 'application/json'
+            Swal.fire({
+                title: 'กรุณาใส่ลิงค์โปรไฟล์',
+                input: 'text',
+                inputPlaceholder: 'โปรดระบุลิงค์โปรไฟล์',
+                inputAttributes: {
+                    autocapitalize: 'off'
                 },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    updateCartInfo();
-                    Swal.fire({
-                        title: 'สำเร็จ!',
-                        text: 'เพิ่มสินค้าลงในตะกร้าแล้ว',
-                        icon: 'success',
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'ผิดพลาด!',
-                        text: data.message || 'ไม่สามารถเพิ่มสินค้าลงในตะกร้าได้',
-                        icon: 'error',
-                        confirmButtonText: 'ตกลง'
+                showCancelButton: true,
+                confirmButtonText: 'ยืนยัน',
+                cancelButtonText: 'ยกเลิก',
+                showLoaderOnConfirm: true,
+                preConfirm: (link) => {
+                    if (!link || link.trim() === '') {
+                        Swal.showValidationMessage('กรุณาใส่ลิงค์')
+                    }
+                    return link;
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            product_id: productId,
+                            index: result.value
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            updateCartInfo();
+                            Swal.fire({
+                                title: 'สำเร็จ!',
+                                text: 'เพิ่มสินค้าลงในตะกร้าแล้ว',
+                                icon: 'success',
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                            });
+                        } else {
+                            let errorMessage = data.message || 'ไม่สามารถเพิ่มสินค้าลงในตะกร้าได้';
+                            if (data.errors && data.errors.index) {
+                                errorMessage = data.errors.index[0];
+                            }
+                            Swal.fire({
+                                title: 'ผิดพลาด!',
+                                text: errorMessage,
+                                icon: 'error',
+                                confirmButtonText: 'ตกลง'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            title: 'ผิดพลาด!',
+                            text: 'เกิดข้อผิดพลาดบางอย่าง',
+                            icon: 'error',
+                            confirmButtonText: 'ตกลง'
+                        });
                     });
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire({
-                    title: 'ผิดพลาด!',
-                    text: 'เกิดข้อผิดพลาดบางอย่าง',
-                    icon: 'error',
-                    confirmButtonText: 'ตกลง'
-                });
             });
         }
     });
@@ -180,40 +210,74 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const productId = this.dataset.productId;
 
-            fetch('/cart', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            Swal.fire({
+                title: 'กรุณาใส่ลิงค์โปรไฟล์',
+                input: 'text',
+                inputPlaceholder: 'โปรดระบุลิงค์โปรไฟล์',
+                inputAttributes: {
+                    autocapitalize: 'off'
                 },
-                body: JSON.stringify({ product_id: productId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.success) {
-                    updateCartInfo();
-                    Swal.fire({
-                        title: 'สำเร็จ!',
-                        text: 'เพิ่มสินค้าลงในตะกร้าแล้ว',
-                        icon: 'success',
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'ผิดพลาด!',
-                        text: 'ไม่สามารถเพิ่มสินค้าลงในตะกร้าได้',
-                        icon: 'error',
-                        confirmButtonText: 'ตกลง'
+                showCancelButton: true,
+                confirmButtonText: 'ยืนยัน',
+                cancelButtonText: 'ยกเลิก',
+                showLoaderOnConfirm: true,
+                preConfirm: (link) => {
+                    if (!link || link.trim() === '') {
+                        Swal.showValidationMessage('กรุณาใส่ลิงค์')
+                    }
+                    return link;
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('/cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            product_id: productId,
+                            index: result.value
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.success) {
+                            updateCartInfo();
+                            Swal.fire({
+                                title: 'สำเร็จ!',
+                                text: 'เพิ่มสินค้าลงในตะกร้าแล้ว',
+                                icon: 'success',
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                            });
+                        } else {
+                            let errorMessage = data.message || 'ไม่สามารถเพิ่มสินค้าลงในตะกร้าได้';
+                            if (data.errors && data.errors.index) {
+                                errorMessage = data.errors.index[0];
+                            }
+                            Swal.fire({
+                                title: 'ผิดพลาด!',
+                                text: errorMessage,
+                                icon: 'error',
+                                confirmButtonText: 'ตกลง'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            title: 'ผิดพลาด!',
+                            text: 'เกิดข้อผิดพลาดบางอย่าง',
+                            icon: 'error',
+                            confirmButtonText: 'ตกลง'
+                        });
                     });
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred.');
             });
         });
     });
