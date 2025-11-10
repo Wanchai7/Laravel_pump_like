@@ -104,7 +104,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name=\"csrf-token\"]').getAttribute('content')
+                    'X-CSRF-TOKEN': document.querySelector('meta[name=\"csrf-token\"]').getAttribute('content'),
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify({ quantity: quantity })
             })
@@ -119,7 +120,8 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch(`/cart/${cartId}`, {
                 method: 'DELETE',
                 headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name=\"csrf-token\"]').getAttribute('content')
+                    'X-CSRF-TOKEN': document.querySelector('meta[name=\"csrf-token\"]').getAttribute('content'),
+                    'Accept': 'application/json'
                 }
             })
             .then(() => openCartModal());

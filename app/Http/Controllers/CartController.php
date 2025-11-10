@@ -59,6 +59,10 @@ class CartController extends Controller
 
         $cart->update(['quantity' => $request->quantity]);
 
+        if ($request->expectsJson()) {
+            return response()->json(['success' => 'Cart updated successfully!']);
+        }
+
         return redirect()->route('cart.index')->with('success', 'Cart updated successfully!');
     }
 
@@ -70,12 +74,20 @@ class CartController extends Controller
 
         $cart->delete();
 
+        if (request()->expectsJson()) {
+            return response()->json(['success' => 'Product removed from cart successfully!']);
+        }
+
         return redirect()->route('cart.index')->with('success', 'Product removed from cart successfully!');
     }
 
     public function clear()
     {
         Cart::where('user_id', Auth::id())->delete();
+
+        if (request()->expectsJson()) {
+            return response()->json(['success' => 'Cart cleared successfully!']);
+        }
 
         return redirect()->route('cart.index')->with('success', 'Cart cleared successfully!');
     }
