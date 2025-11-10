@@ -36,30 +36,41 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateCartModal(items, total) {
         cartModalBody.innerHTML = '';
         if (items.length === 0) {
-            cartModalBody.innerHTML = '<p>Your cart is empty.</p>';
+            cartModalBody.innerHTML = '<p class="text-white text-center">ตะกร้าสินค้าของคุณว่างเปล่า</p>';
         } else {
             items.forEach(item => {
                 const cartItem = document.createElement('div');
-                cartItem.classList.add('flex', 'justify-between', 'items-center', 'mb-4');
+                cartItem.classList.add('flex', 'items-center', 'mb-4', 'text-white');
+
+                const itemSubtotal = item.product.price * item.quantity;
+
                 cartItem.innerHTML = `
-                    <div>
-                        <p class=\"font-semibold\">${item.product.name}</p>
-                        <p class=\"text-gray-200\">${item.quantity} x ${item.product.price} บาท</p>
+                    <img src="${item.product.image_url}" alt="${item.product.name}" class="w-16 h-16 object-cover rounded-md">
+                    <div class="flex-grow ml-4">
+                        <p class="font-semibold">${item.product.name}</p>
+                        <p class="text-sm text-gray-400">${item.quantity} x ${parseFloat(item.product.price).toFixed(2)} บาท</p>
                     </div>
-                    <div>
-                        <form class=\"update-cart-form\" data-id=\"${item.id}\">
-                            <input type=\"number\" name=\"quantity\" value=\"${item.quantity}\" class=\"w-16 text-center border\">
-                            <button type=\"submit\" class=\"text-blue-500 hover:text-blue-700\">Update</button>
+                    <div class="flex items-center">
+                        <form class="update-cart-form" data-id="${item.id}">
+                            <input type="number" name="quantity" value="${item.quantity}" class="w-12 text-center bg-secondary-700 border border-secondary-600 rounded-md text-sm p-1">
+                            <button type="submit" class="text-primary-400 hover:text-primary-500 text-xs ml-2">อัปเดต</button>
                         </form>
-                        <form class=\"remove-from-cart-form\" data-id=\"${item.id}\">
-                            <button type=\"submit\" class=\"text-red-500 hover:text-red-700\">Remove</button>
+                    </div>
+                    <div class="font-semibold ml-4" style="width: 80px; text-align: right;">
+                        ${itemSubtotal.toFixed(2)} บาท
+                    </div>
+                    <div class="ml-4">
+                        <form class="remove-from-cart-form" data-id="${item.id}">
+                            <button type="submit" class="text-red-500 hover:text-red-700">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
                         </form>
                     </div>
                 `;
                 cartModalBody.appendChild(cartItem);
             });
         }
-        cartModalTotal.textContent = `${total} บาท`;
+        cartModalTotal.textContent = `${parseFloat(total).toFixed(2)} บาท`;
         updateCartCount(items.length);
     }
 
