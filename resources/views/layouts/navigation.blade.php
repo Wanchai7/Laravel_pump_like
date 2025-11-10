@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-gradient-to-r from-primary-500 to-primary-600 border-b border-primary-900">
+<nav x-data="{ open: false }" class="bg-secondary-900 border-b border-secondary-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -32,7 +32,7 @@
             <!-- Settings Dropdown -->
             @auth
 <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <button id="cart-icon" class="relative inline-flex items-center p-2 text-sm font-medium text-center text-white bg-transparent rounded-lg hover:bg-primary-600 focus:ring-4 focus:outline-none focus:ring-primary-300">
+                <button id="cart-icon" class="relative inline-flex items-center p-2 text-sm font-medium text-center text-white bg-transparent rounded-lg hover:bg-secondary-800 focus:ring-4 focus:outline-none focus:ring-primary-300">
                     <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
@@ -41,7 +41,7 @@
 
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:text-primary-100 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-transparent hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -72,17 +72,17 @@
             </div>
             @else
                 <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <a href="{{ route('login') }}" class="text-sm text-white underline">เข้าสู่ระบบ</a>
+                    <a href="{{ route('login') }}" class="text-sm text-gray-300 hover:text-white underline">เข้าสู่ระบบ</a>
 
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ml-4 text-sm text-white underline">สมัครสมาชิก</a>
+                        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-300 hover:text-white underline">สมัครสมาชิก</a>
                     @endif
                 </div>
             @endauth
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-primary-100 hover:bg-primary-600 focus:outline-none focus:bg-primary-600 focus:text-white transition duration-150 ease-in-out">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gray-300 hover:bg-secondary-800 focus:outline-none focus:bg-secondary-800 focus:text-white transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -93,7 +93,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-primary-500">
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-secondary-900">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
                 {{ __('สินค้า') }}
@@ -113,10 +113,10 @@
 
         <!-- Responsive Settings Options -->
         @auth
-        <div class="pt-4 pb-1 border-t border-primary-700">
+        <div class="pt-4 pb-1 border-t border-secondary-700">
             <div class="px-4">
                 <div class="font-medium text-base text-white">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-primary-100">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-sm text-gray-300">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
@@ -137,7 +137,7 @@
             </div>
         </div>
         @else
-        <div class="pt-4 pb-1 border-t border-primary-700">
+        <div class="pt-4 pb-1 border-t border-secondary-700">
             <div class="px-4">
                 <a href="{{ route('login') }}" class="font-medium text-base text-white">เข้าสู่ระบบ</a>
             </div>
