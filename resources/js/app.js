@@ -64,7 +64,22 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateCartCount(count) {
-        cartCount.textContent = count;
+        if (cartCount) {
+            cartCount.textContent = count;
+        }
+    }
+
+    function updateCartInfo() {
+        fetch('/api/cart')
+            .then(response => response.json())
+            .then(data => {
+                if (data.cartItems) {
+                    updateCartCount(data.cartItems.length);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching cart info:', error);
+            });
     }
 
     document.body.addEventListener('submit', function (e) {
@@ -107,13 +122,42 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch(form.action, {
                 method: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json'
                 },
                 body: formData
             })
             .then(response => response.json())
             .then(data => {
-                openCartModal();
+                if (data.success) {
+                    updateCartInfo();
+                    Swal.fire({
+                        title: 'สำเร็จ!',
+                        text: 'เพิ่มสินค้าลงในตะกร้าแล้ว',
+                        icon: 'success',
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'ผิดพลาด!',
+                        text: data.message || 'ไม่สามารถเพิ่มสินค้าลงในตะกร้าได้',
+                        icon: 'error',
+                        confirmButtonText: 'ตกลง'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'ผิดพลาด!',
+                    text: 'เกิดข้อผิดพลาดบางอย่าง',
+                    icon: 'error',
+                    confirmButtonText: 'ตกลง'
+                });
             });
         }
     });
@@ -134,12 +178,16 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if(data.success) {
-                    openCartModal();
+                    updateCartInfo();
                     Swal.fire({
                         title: 'สำเร็จ!',
                         text: 'เพิ่มสินค้าลงในตะกร้าแล้ว',
                         icon: 'success',
-                        confirmButtonText: 'ตกลง'
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
                     });
                 } else {
                     Swal.fire({
@@ -158,9 +206,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Initial cart count update on page load
-    fetch('/api/cart')
-        .then(response => response.json())
-        .then(data => {
-            updateCartCount(data.cartItems.length);
-        });
+    updateCartInfo();
 });

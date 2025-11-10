@@ -48,18 +48,22 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('update-product', function (User $user, Product $product) {
-            if ($user->hasRole('owner') || $user->hasRole('admin')) {
-                return true;
+            // Admins can update any product, unless it belongs to an owner.
+            if ($user->hasRole('admin')) {
+                return !$product->user->hasRole('owner');
             }
 
+            // Regular users can only update their own products.
             return $user->id === $product->user_id;
         });
 
         Gate::define('delete-product', function (User $user, Product $product) {
-            if ($user->hasRole('owner') || $user->hasRole('admin')) {
-                return true;
+            // Admins can delete any product, unless it belongs to an owner.
+            if ($user->hasRole('admin')) {
+                return !$product->user->hasRole('owner');
             }
 
+            // Regular users can only delete their own products.
             return $user->id === $product->user_id;
         });
     }

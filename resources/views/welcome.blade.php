@@ -24,11 +24,23 @@
                                     <h3 class="font-semibold text-lg"><a href="{{ route('products.show', $product) }}">{{ $product->name }}</a></h3>
                                     <p class="text-gray-200">{{ $product->description }}</p>
                                     <p class="text-primary-400 font-semibold mt-2">{{ $product->price }} บาท</p>
-                                    <form action="{{ route('cart.store') }}" method="POST" class="mt-4">
+                                    <form action="{{ route('cart.store') }}" method="POST" class="mt-4 add-to-cart-form">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <button type="submit" class="w-full bg-primary-500 text-white py-2 px-4 rounded-md hover:bg-primary-600">เพิ่มลงตะกร้า</button>
                                     </form>
+                                    <div class="mt-4 flex justify-end space-x-4">
+                                        @can('update-product', $product)
+                                            <a href="{{ route('products.edit', $product) }}" class="inline-block bg-yellow-500 text-white py-1 px-3 rounded-md hover:bg-yellow-600 text-sm">แก้ไข</a>
+                                        @endcan
+                                        @can('delete-product', $product)
+                                            <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบสินค้านี้?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="inline-block bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600 text-sm">ลบ</button>
+                                            </form>
+                                        @endcan
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
