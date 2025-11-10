@@ -19,7 +19,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="font-sans antialiased text-lg">
-        <div class="min-h-screen bg-background">
+        <div class="flex flex-col min-h-screen bg-background">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -32,9 +32,15 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="flex-grow">
                 {{ $slot }}
             </main>
+
+            <footer class="bg-secondary-900 text-white py-4">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <p>หากพบปัญหาในการใช้งานหรือต้องการความช่วยเหลือ โปรดติดต่อ <a href="mailto:support@example.com" class="text-primary-400 hover:underline">support@example.com</a></p>
+                </div>
+            </footer>
         </div>
 
         @stack('scripts')

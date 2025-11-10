@@ -25,4 +25,25 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function getStatusAttribute($value)
+    {
+        if ($value === 'pending') {
+            return 'รอดำเนินการ';
+        }
+        return $value;
+    }
+
+    public function getStatusColorClassAttribute()
+    {
+        if ($this->status === 'รอดำเนินการ' || $this->status === 'pending') {
+            return 'bg-yellow-500 text-yellow-900';
+        }
+
+        if ($this->status === 'ดำเนินการเสร็จเรียบร้อย') {
+            return 'bg-green-500 text-green-900';
+        }
+
+        return 'bg-gray-500 text-gray-900';
+    }
 }
