@@ -58,8 +58,13 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="text-right mt-4">
+                            <div class="text-right mt-4 flex justify-end items-center space-x-4">
                                 <p class="font-semibold">ยอดรวมทั้งสิ้น: {{ number_format($order->total, 2) }} บาท</p>
+                                <form action="{{ route('orders.destroy', $order) }}" method="POST" onsubmit="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบคำสั่งซื้อนี้?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-900">ลบ</button>
+                                </form>
                             </div>
                         </div>
                     @empty

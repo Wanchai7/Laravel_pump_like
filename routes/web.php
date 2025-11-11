@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::delete('/orders/{order}', [OrderController::class, 'userDestroy'])->name('orders.destroy');
     Route::get('/orders/{order}/status', [OrderController::class, 'getStatus'])->name('orders.status');
 
     Route::middleware(['auth', 'can:isAdmin'])->prefix('admin')->name('admin.')->group(function () {

@@ -50,7 +50,7 @@ class OrderController extends Controller
 
     public function adminIndex()
     {
-        $orders = Order::with('user', 'items.product')->latest()->get();
+        $orders = Order::where('hidden_from_admin', false)->with('user', 'items.product')->latest()->get();
         return view('admin.orders.index', compact('orders'));
     }
 
@@ -78,8 +78,19 @@ class OrderController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
+        $order->update(['hidden_from_admin' => true]);
+
+        return redirect()->route('admin.orders.index')->with('success', 'ซ่อนคำสั่งซื้อเรียบร้อยแล้ว');
+    }
+
+    public function userDestroy(Order $order)
+    {
+        if (Auth::id() !== $order->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $order->delete();
 
-        return redirect()->route('admin.orders.index')->with('success', 'ลบคำสั่งซื้อเรียบร้อยแล้ว');
+        return redirect()->route('orders.index')->with('success', 'ลบคำสั่งซื้อเรียบร้อยแล้ว');
     }
 }
