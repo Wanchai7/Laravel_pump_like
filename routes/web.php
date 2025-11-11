@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['auth', 'can:isAdmin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/orders', [OrderController::class, 'adminIndex'])->name('orders.index');
         Route::patch('/orders/{order}', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+        Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
     });
 });
 

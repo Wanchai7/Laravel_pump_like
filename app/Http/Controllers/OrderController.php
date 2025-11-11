@@ -71,4 +71,15 @@ class OrderController extends Controller
     {
         return response()->json(['status' => $order->status]);
     }
+
+    public function destroy(Order $order)
+    {
+        if (!Auth::user()->hasRole('owner') && !Auth::user()->hasRole('admin')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $order->delete();
+
+        return redirect()->route('admin.orders.index')->with('success', 'ลบคำสั่งซื้อเรียบร้อยแล้ว');
+    }
 }

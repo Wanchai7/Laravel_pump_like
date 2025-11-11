@@ -27,6 +27,9 @@
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">แก้ไข</span>
                                 </th>
+                                <th scope="col" class="relative px-6 py-3">
+                                    <span class="sr-only">ลบ</span>
+                                </th>
                             </tr>
                         </thead>
                         @foreach ($orders as $order)
@@ -57,9 +60,18 @@
                                             </select>
                                         </form>
                                     </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        @if ($order->status === 'ดำเนินการเสร็จเรียบร้อย')
+                                            <form action="{{ route('admin.orders.destroy', $order) }}" method="POST" onsubmit="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบคำสั่งซื้อนี้?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-900">ลบ</button>
+                                            </form>
+                                        @endif
+                                    </td>
                                 </tr>
                                 <tr x-show="open" x-cloak>
-                                    <td colspan="7" class="p-4 bg-secondary-800">
+                                    <td colspan="8" class="p-4 bg-secondary-800">
                                         <h4 class="font-semibold text-white mb-2">รายการในคำสั่งซื้อ</h4>
                                         <table class="min-w-full divide-y divide-secondary-700">
                                             <thead class="bg-secondary-700">
