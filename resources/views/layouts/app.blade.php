@@ -36,25 +36,8 @@
                 {{ $slot }}
             </main>
 
-                        <footer class="bg-secondary-900 text-white py-6">
-                            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                                <p class="text-lg font-semibold mb-4">หากพบปัญหาในการใช้งานหรือต้องการความช่วยเหลือ โปรดติดต่อ:</p>
-                                <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-6">
-                                    <a href="#" class="text-primary-400 hover:underline flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.999 3.999H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5.999c0-1.103-.897-2-2-2zm-11.5 11.5h-2v-2h2v2zm0-4h-2v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg>
-                                        LINE: wanchai8439
-                                    </a>
-                                    <a href="#" class="text-primary-400 hover:underline flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.776-3.89 1.094 0 2.24.195 2.24.195v2.45h-1.26c-1.247 0-1.646.773-1.646 1.563V12h2.773l-.443 2.89h-2.33V22c4.781-.75 8.438-4.887 8.438-9.878z"/></svg>
-                                        FACEBOOK: View Wanchai && ยีนส์ ครับ
-                                    </a>
-                                    <a href="#" class="text-primary-400 hover:underline flex items-center">
-                                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 2.5h9a5 5 0 015 5v9a5 5 0 01-5 5h-9a5 5 0 01-5-5v-9a5 5 0 015-5zm0 2a3 3 0 00-3 3v9a3 3 0 003 3h9a3 3 0 003-3v-9a3 3 0 00-3-3h-9zm7.5 3a.5.5 0 110 1 .5.5 0 010-1zM12 9a3 3 0 110 6 3 3 0 010-6zm0 2a1 1 0 100 2 1 1 0 000-2z"/></svg>
-                                        INSTAGRAM: yeans_cup && wxnchxi._
-                                    </a>
-                                </div>
-                            </div>
-                        </footer>        </div>
+            @include('layouts.partials.footer')
+        </div>
 
         @stack('scripts')
 
